@@ -13,6 +13,23 @@ type Request struct {
 	Params  json.RawMessage `json:"params"`
 }
 
+func NewRequest(method string, params ...interface{}) (*Request, error) {
+	// Encode json-rpc request
+	request := Request{
+		JsonRPC: "2.0",
+		Method:  method,
+	}
+	if len(params) > 0 {
+		data, err := json.Marshal(params)
+		if err != nil {
+			return nil, err
+		}
+		request.Params = data
+	}
+
+	return &request, nil
+}
+
 // Response is a jsonrpc response
 type Response struct {
 	ID     uint64          `json:"id"`

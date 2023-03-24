@@ -1,6 +1,7 @@
 package jsonrpc
 
 import (
+	"github.com/umbracle/ethgo/jsonrpc/codec"
 	"github.com/umbracle/ethgo/jsonrpc/transport"
 )
 
@@ -54,6 +55,11 @@ func NewClient(addr string, opts ...ConfigOption) (*Client, error) {
 // Close closes the transport
 func (c *Client) Close() error {
 	return c.transport.Close()
+}
+
+// Batch makes a jsonrpc batch request
+func (c *Client) Batch(requests []*codec.Request) ([]codec.Response, error) {
+	return c.transport.Batch(requests)
 }
 
 // Call makes a jsonrpc call

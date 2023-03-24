@@ -3,12 +3,17 @@ package transport
 import (
 	"os"
 	"strings"
+
+	"github.com/umbracle/ethgo/jsonrpc/codec"
 )
 
 // Transport is an inteface for transport methods to send jsonrpc requests
 type Transport interface {
 	// Call makes a jsonrpc request
 	Call(method string, out interface{}, params ...interface{}) error
+
+	// Batch makes a batch request
+	Batch([]*codec.Request) ([]codec.Response, error)
 
 	// SetMaxConnsPerHost sets the maximum number of connections that can be established with a host
 	SetMaxConnsPerHost(count int)
